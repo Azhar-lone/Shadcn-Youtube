@@ -6,18 +6,22 @@ import { NavLink, useLocation } from "react-router-dom";
 
 // Components
 import { buttonVariants } from "../ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import {
   HomeIcon,
   ClockIcon,
+  HistoryIcon,
+  PlaySquareIcon,
+  ListVideoIcon,
   TrophyIcon,
-  LightbulbIcon,
   HelpCircleIcon,
   ThumbsUpIcon,
-  FilmIcon,
   MusicIcon,
   SettingsIcon,
   Gamepad2Icon,
+  CirclePlayIcon,
+  UsersIcon,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -39,25 +43,36 @@ const Sidebar: React.FC = () => {
   if (!isSidebarOpen) return null;
 
   return (
-    <div className="sm:flex flex-col sm:w-[12%] items-start top-[10vh] fixed left-0 gap-1  hidden h-[90vh]">
-      {Links.map(({ Icon, href, text }, index) => (
-        // <div></div>
-        <NavLink
-          to={href}
+    <ScrollArea className="sm:flex flex-col sm:w-[17%] items-start  absolute left-0 gap-1  hidden h-[95vh] overflow-y-auto py-5">
+      {categorizedLinks.map((items, index) => (
+        <div
           key={index}
-          onClick={() => setSelectedTab(href)}
-          className={buttonVariants({
-            variant: selectedTab === href ? "secondary" : "ghost",
-            className: `flex gap-3 w-full ${
-              selectedTab === href && "font-extrabold"
-            }`,
-          })}
+          className="flex flex-col justify-center gap-3 w-[90%] mx-auto "
         >
-          <Icon />
-          <div className="w-[80%]">{text}</div>
-        </NavLink>
+          {items.category && (
+            <h1 className="text-lg font-bold p-2 ">{items.category}</h1>
+          )}
+          {items.links.map(({ Icon, href, text }, index) => (
+            // <div></div>
+            <NavLink
+              to={href}
+              key={index}
+              onClick={() => setSelectedTab(href)}
+              className={buttonVariants({
+                variant: selectedTab === href ? "secondary" : "ghost",
+                className: `flex gap-3 w-full  ${
+                  selectedTab === href && "font-extrabold text-lg"
+                }`,
+              })}
+            >
+              <Icon />
+              <div className="w-[70%] hidden md:block">{text}</div>
+            </NavLink>
+          ))}
+          <hr className="border-b" />
+        </div>
       ))}
-    </div>
+    </ScrollArea>
   );
 };
 
@@ -70,66 +85,105 @@ interface Links {
 }
 
 interface categorizedLinks {
-  category: string;
+  category?: string;
   links: Links[];
 }
 
-let Links: Links[] = [
+let categorizedLinks: categorizedLinks[] = [
   {
-    href: "/",
-    text: "Home",
-    Icon: HomeIcon,
-  },
-  // {
-  //   href: "/subscriptions",
-  //   text: "Subscriptions",
-  //   Icon: <HomeIcon ,
-  // },
-  {
-    href: "/watchlater",
-    text: "Watch later",
-    Icon: ClockIcon,
+    links: [
+      {
+        href: "/",
+        text: "Home",
+        Icon: HomeIcon,
+      },
+
+      {
+        href: "/shorts",
+        text: "Shorts",
+        Icon: CirclePlayIcon,
+      },
+
+      {
+        href: "/subscriptions",
+        text: "Subscriptions",
+        Icon: PlaySquareIcon,
+      },
+    ],
   },
 
   {
-    href: "/liked",
-    text: "Liked videos",
-    Icon: ThumbsUpIcon,
-  },
-  {
-    href: "/feed/film",
-    text: "Films",
-    Icon: FilmIcon,
+    category: "You",
+    links: [
+      {
+        href: "/your-channel",
+        text: "Your Channel",
+        Icon: UsersIcon,
+      },
+      {
+        href: "/history",
+        text: "History",
+        Icon: HistoryIcon,
+      },
+      {
+        href: "/playlist",
+        text: "Playlist",
+        Icon: ListVideoIcon,
+      },
+      {
+        href: "/liked",
+        text: "Liked videos",
+        Icon: ThumbsUpIcon,
+      },
+      {
+        href: "/watchlater",
+        text: "Watch later",
+        Icon: ClockIcon,
+      },
+    ],
   },
 
   {
-    href: "/feed/sports",
-    text: "Sports",
-    Icon: TrophyIcon,
+    category: "Explore",
+    links: [
+      {
+        href: "/",
+        text: "Home",
+        Icon: HomeIcon,
+      },
+
+      {
+        href: "/feed/music",
+        text: "Music",
+        Icon: MusicIcon,
+      },
+
+      {
+        href: "/feed/gaming",
+        text: "Gaming",
+        Icon: Gamepad2Icon,
+      },
+
+      {
+        href: "/feed/sports",
+        text: "Sports",
+        Icon: TrophyIcon,
+      },
+    ],
   },
   {
-    href: "/feed/music",
-    text: "Music",
-    Icon: MusicIcon,
-  },
-  {
-    href: "/feed/gaming",
-    text: "Gaming",
-    Icon: Gamepad2Icon,
-  },
-  {
-    href: "/feed/education",
-    text: "Education",
-    Icon: LightbulbIcon,
-  },
-  {
-    href: "/help",
-    text: "Help Center",
-    Icon: HelpCircleIcon,
-  },
-  {
-    href: "/settings",
-    text: "Settings",
-    Icon: SettingsIcon,
+    links: [
+      {
+        href: "/settings",
+        text: "Settings",
+        Icon: SettingsIcon,
+      },
+
+      {
+        href: "/help",
+        text: "Help Center",
+        Icon: HelpCircleIcon,
+      },
+    ],
   },
 ];
