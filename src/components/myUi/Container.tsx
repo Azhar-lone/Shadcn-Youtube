@@ -17,9 +17,10 @@ const Container: React.FC<ContainerProps> = ({ children, className }) => {
     <div
       className={cn(
         `
-            mt-[11vh] mb-[3vh] mx-auto 
-            lg:w-[94%] lg:ml-auto
-            sm:w-[92%] sm:ml-[8%] p-2 rounded-lg
+            md:w-[83%] md:ml-[17%]
+
+sm:w-[90%] sm:ml-[10%]
+
             `,
         className
       )}

@@ -1,45 +1,46 @@
 import { Provider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import store from "./redux/store";
 
+import Rootlayout from "./layouts/Root";
 import GeneralError from "@/components/myUi/error";
 import Home from "@/pages/Home";
-import store from "./redux/store";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Rootlayout />,
     errorElement: <GeneralError />,
-    // children: [
-    //   {
-    //     path: "/",
-    //     element: <MainContainer />
-    //   },
-    //   {
-    //     path: "watch",
-    //     element: <WatchVideo />
-    //   },
-    //   {
-    //     path: "results",
-    //     element: <SearchResults />
-    //   },
-    //   {
-    //     path: "subscriptions",
-    //     element: <Subscriptions />
-    //   },
-    //   {
-    //     path: "watchlater",
-    //     element: <WatchLater />
-    //   },
-    //   {
-    //     path: "liked",
-    //     element: <LikedVideos />
-    //   },
-    //   {
-    //     path: "feed/:category",
-    //     element: <Category />
-    //   }
-    // ]
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      //   {
+      //     path: "watch",
+      //     element: <WatchVideo />
+      //   },
+      //   {
+      //     path: "results",
+      //     element: <SearchResults />
+      //   },
+      //   {
+      //     path: "subscriptions",
+      //     element: <Subscriptions />
+      //   },
+      //   {
+      //     path: "watchlater",
+      //     element: <WatchLater />
+      //   },
+      //   {
+      //     path: "liked",
+      //     element: <LikedVideos />
+      //   },
+      //   {
+      //     path: "feed/:category",
+      //     element: <Category />
+      //   }
+    ],
   },
 ]);
 

@@ -22,6 +22,7 @@ import {
   Gamepad2Icon,
   CirclePlayIcon,
   UsersIcon,
+  TrendingUpIcon,
 } from "lucide-react";
 import { LucideIcon } from "lucide-react";
 
@@ -43,36 +44,38 @@ const Sidebar: React.FC = () => {
   if (!isSidebarOpen) return null;
 
   return (
-    <ScrollArea className="sm:flex flex-col sm:w-[17%] items-start  absolute left-0 gap-1  hidden h-[95vh] overflow-y-auto py-5">
-      {categorizedLinks.map((items, index) => (
-        <div
-          key={index}
-          className="flex flex-col justify-center gap-3 w-[90%] mx-auto "
-        >
-          {items.category && (
-            <h1 className="text-lg font-bold p-2 ">{items.category}</h1>
-          )}
-          {items.links.map(({ Icon, href, text }, index) => (
-            // <div></div>
-            <NavLink
-              to={href}
-              key={index}
-              onClick={() => setSelectedTab(href)}
-              className={buttonVariants({
-                variant: selectedTab === href ? "secondary" : "ghost",
-                className: `flex gap-3 w-full  ${
-                  selectedTab === href && "font-extrabold text-lg"
-                }`,
-              })}
-            >
-              <Icon />
-              <div className="w-[70%] hidden md:block">{text}</div>
-            </NavLink>
-          ))}
-          <hr className="border-b" />
-        </div>
-      ))}
-    </ScrollArea>
+    <div className="md:flex flex-col md:w-[17%]   items-start fixed top-12 left-0 gap-1   hidden h-[95vh]  py-3">
+      <ScrollArea className="overflow-y-auto w-full">
+        {categorizedLinks.map((items, index) => (
+          <div
+            key={index}
+            className="flex flex-col justify-center gap-3 w-[90%] mx-auto "
+          >
+            {items.category && (
+              <h1 className="text-lg font-bold p-2 ">{items.category}</h1>
+            )}
+            {items.links.map(({ Icon, href, text }, index) => (
+              // <div></div>
+              <NavLink
+                to={href}
+                key={index}
+                onClick={() => setSelectedTab(href)}
+                className={buttonVariants({
+                  variant: selectedTab === href ? "secondary" : "ghost",
+                  className: `flex gap-3 w-full  ${
+                    selectedTab === href && "font-extrabold text-lg"
+                  }`,
+                })}
+              >
+                <Icon />
+                <div className="w-[70%]">{text}</div>
+              </NavLink>
+            ))}
+            <hr className="border-b" />
+          </div>
+        ))}
+      </ScrollArea>
+    </div>
   );
 };
 
@@ -147,9 +150,9 @@ let categorizedLinks: categorizedLinks[] = [
     category: "Explore",
     links: [
       {
-        href: "/",
-        text: "Home",
-        Icon: HomeIcon,
+        href: "/feet/trending",
+        text: "Trending",
+        Icon: TrendingUpIcon,
       },
 
       {
