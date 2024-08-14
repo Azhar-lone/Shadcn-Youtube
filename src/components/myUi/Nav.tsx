@@ -6,11 +6,20 @@ import { autoSuggestionsUrl } from "@/constants";
 import { Link, useNavigate } from "react-router-dom";
 
 // Icons
-import { MenuIcon, SearchIcon, VideoIcon } from "lucide-react";
+import {
+  MenuIcon,
+  SearchIcon,
+  VideoIcon,
+  MicIcon,
+  BellIcon,
+  PlusSquare,
+} from "lucide-react";
 
 import ProfileButton from "./ProfileButton";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { ModeToggle } from "./mode-toggle";
+
 const Nav = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [suggestionList, setSuggestionList] = useState<string[]>([]);
@@ -70,7 +79,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between  px-4 py-3 w-full ">
+    <nav className="flex items-center justify-between  px-6 py-3 w-full ">
       <div className="flex items-center gap-3">
         <MenuIcon onClick={toggleMenu} />
         <Link to="/" className="flex items-center gap-1 ">
@@ -87,7 +96,7 @@ const Nav = () => {
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setShowSuggestions(false)}
             onKeyDown={(e) => handleKeyPress(e)}
-            className="w-[90%] rounded-l-2xl "
+            className="w-[90%] rounded-l-2xl focus-visible:ring-offset-0 focus-visible:ring-blue-800 rounded-r-0  focus-visible:ring-1"
           />
           <Button
             className="rounded-r-full px-5"
@@ -95,6 +104,9 @@ const Nav = () => {
             variant={"secondary"}
           >
             <SearchIcon onClick={() => handleSearch(searchText)} />
+          </Button>
+          <Button className={"ml-6 rounded-full p-3"} variant={"secondary"}>
+            <MicIcon />
           </Button>
         </div>
         {showSuggestions && suggestionList.length > 0 && (
@@ -114,8 +126,17 @@ const Nav = () => {
           </div>
         )}
       </div>
+      <div className="flex gap-4 items-center">
+        <ModeToggle />
+        <Button className={" rounded-full p-3"} variant={"ghost"}>
+          <PlusSquare />
+        </Button>
+        <Button className={" rounded-full p-3"} variant={"ghost"}>
+          <BellIcon />
+        </Button>
 
-      <ProfileButton />
+        <ProfileButton />
+      </div>
     </nav>
   );
 };

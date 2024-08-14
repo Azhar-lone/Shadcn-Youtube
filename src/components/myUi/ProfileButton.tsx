@@ -23,7 +23,7 @@ const ProfileButton: React.FC = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarFallback></AvatarFallback>
+          <AvatarFallback>A</AvatarFallback>
           <AvatarImage src={""} />
         </Avatar>
       </DropdownMenuTrigger>
@@ -31,24 +31,14 @@ const ProfileButton: React.FC = () => {
         <DropdownMenuLabel></DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          className="gap-2 cursor-pointer"
-        >
-        </DropdownMenuItem>
-          <DropdownMenuItem
-          >
-          </DropdownMenuItem>
+        <DropdownMenuItem className="gap-2 cursor-pointer"></DropdownMenuItem>
+        <DropdownMenuItem></DropdownMenuItem>
 
-        
-        <DropdownMenuItem
-          className="gap-2 cursor-pointer"
-        >
+        <DropdownMenuItem className="gap-2 cursor-pointer">
           <Settings /> Account Settings
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="gap-2 cursor-pointer"
-        >
+        <DropdownMenuItem className="gap-2 cursor-pointer">
           <LogOut /> Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
