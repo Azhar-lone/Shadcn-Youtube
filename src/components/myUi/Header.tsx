@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { toggleSidebarMenu } from "@/redux/sidebarSlice";
 import { updateSearchQuery } from "@/redux/searchSlice";
 import { autoSuggestionsUrl } from "@/constants";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 // Icons
 import {
@@ -13,6 +13,10 @@ import {
   MicIcon,
   BellIcon,
   PlusSquare,
+  CirclePlayIcon,
+  HomeIcon,
+  PlaySquareIcon,
+  PlusCircleIcon,
 } from "lucide-react";
 
 import ProfileButton from "./ProfileButton";
@@ -20,7 +24,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./mode-toggle";
 
-const Nav = () => {
+// Types
+import { Links } from "@/components/myUi/Sidebar";
+
+const Header = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [suggestionList, setSuggestionList] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
@@ -79,9 +86,9 @@ const Nav = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between  px-6 py-2 w-full sticky bg-background  top-0   ">
+    <nav className="flex items-center justify-between  px-6 py-2 w-[100%] sticky bg-background  top-0   ">
       <div className="flex items-center gap-3">
-        <MenuIcon onClick={toggleMenu} />
+        <MenuIcon onClick={toggleMenu} className="md:block hidden " />
         <Link to="/" className="flex items-center gap-1 ">
           <VideoIcon />
           <h1 className="font-bold text-lg md:text-2xl">shadTube</h1>
@@ -96,16 +103,20 @@ const Nav = () => {
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setShowSuggestions(false)}
             onKeyDown={(e) => handleKeyPress(e)}
-            className="w-[90%] rounded-l-2xl focus-visible:ring-offset-0 focus-visible:ring-blue-800 rounded-r-0  focus-visible:ring-1"
+            className="w-[90%] hidden md:block rounded-l-2xl focus-visible:ring-offset-0 focus-visible:ring-blue-800 rounded-r-0  focus-visible:ring-1"
           />
           <Button
-            className="rounded-r-full px-5"
+            className="rounded-r-full px-5 hidden md:block"
             aria-label="search"
             variant={"secondary"}
           >
-            <SearchIcon onClick={() => handleSearch(searchText)} />
+            <SearchIcon onClick={() => handleSearch(searchText)} className="" />
           </Button>
-          <Button className={"ml-6 rounded-full p-3"} variant={"secondary"}>
+
+          <Button
+            className={"ml-6 rounded-full p-3 hidden md:block"}
+            variant={"secondary"}
+          >
             <MicIcon />
           </Button>
         </div>
@@ -127,6 +138,11 @@ const Nav = () => {
         )}
       </div>
       <div className="flex gap-4 items-center">
+        <SearchIcon
+          onClick={() => handleSearch(searchText)}
+          className="md:hidden block"
+        />
+
         <ModeToggle />
         <Button className={" rounded-full p-3"} variant={"ghost"}>
           <PlusSquare />
@@ -135,10 +151,65 @@ const Nav = () => {
           <BellIcon />
         </Button>
 
-        <ProfileButton />
+        <ProfileButton className="hidden md:block" />
       </div>
     </nav>
   );
 };
 
-export default Nav;
+export default Header;
+
+export const Bottombar: React.FC = () => {
+  const [selectedTab, setSelectedTab] = useState<string>(
+    window.location.pathname
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    setSelectedTab(location.pathname);
+  }, [location.pathname]);
+
+  return (
+    <div className="w-full md:hidden flex gap-4 justify-center fixed items-center bg-background bottom-1 border-t p-3 font-light">
+      {mobileLinks.map((link, i) => (
+        <>
+          {i === 2 && <PlusCircleIcon className="size-14" />}
+          <NavLink
+            to={link.href}
+            key={i}
+            onClick={() => setSelectedTab(link.href)}
+            className={`flex flex-col w-fit  items-center  ${
+              selectedTab === link.href && "font-extrabold text-lg"
+            }`}
+          >
+            <link.Icon />
+            {link.text}
+          </NavLink>
+        </>
+      ))}
+      <div className="flex flex-col items-center ">
+        <ProfileButton />
+        You
+      </div>
+    </div>
+  );
+};
+
+let mobileLinks: Links[] = [
+  {
+    text: "Home",
+    href: "/",
+    Icon: HomeIcon,
+  },
+  {
+    href: "/shorts",
+    text: "Shorts",
+    Icon: CirclePlayIcon,
+  },
+
+  {
+    href: "/subscriptions",
+    text: "Subscriptions",
+    Icon: PlaySquareIcon,
+  },
+];

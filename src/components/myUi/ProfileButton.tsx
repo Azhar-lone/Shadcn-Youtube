@@ -1,7 +1,7 @@
 import React from "react";
+import { cn } from "@/lib/utils";
 
 //import Icons
-
 //shadcn  components
 import {
   DropdownMenu,
@@ -18,10 +18,10 @@ import { LogOut, Settings } from "lucide-react";
 
 // context
 
-const ProfileButton: React.FC = () => {
+const ProfileButton: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className={cn(className)}>
         <Avatar>
           <AvatarFallback>A</AvatarFallback>
           <AvatarImage src={""} />

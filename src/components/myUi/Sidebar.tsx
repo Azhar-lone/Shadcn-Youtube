@@ -44,44 +44,46 @@ const Sidebar: React.FC = () => {
   if (!isSidebarOpen) return null;
 
   return (
-    <div className="md:flex flex-col md:w-[17%]   items-start fixed top-12 left-0 gap-1   hidden h-[95vh]  py-3">
-      <ScrollArea className="overflow-y-auto w-full">
-        {categorizedLinks.map((items, index) => (
-          <div
-            key={index}
-            className="flex flex-col justify-center gap-3 w-[90%] mx-auto "
-          >
-            {items.category && (
-              <h1 className="text-lg font-bold p-2 ">{items.category}</h1>
-            )}
-            {items.links.map(({ Icon, href, text }, index) => (
-              // <div></div>
-              <NavLink
-                to={href}
-                key={index}
-                onClick={() => setSelectedTab(href)}
-                className={buttonVariants({
-                  variant: selectedTab === href ? "secondary" : "ghost",
-                  className: `flex gap-3 w-full  ${
-                    selectedTab === href && "font-extrabold text-lg"
-                  }`,
-                })}
-              >
-                <Icon />
-                <div className="w-[70%]">{text}</div>
-              </NavLink>
-            ))}
-            <hr className="border-b" />
-          </div>
-        ))}
-      </ScrollArea>
-    </div>
+    <>
+      <div className="md:flex flex-col md:w-[17%]   items-start fixed top-12 left-0 gap-1   hidden h-[95vh]  py-3">
+        <ScrollArea className="overflow-y-auto w-full">
+          {categorizedLinks.map((items, index) => (
+            <div
+              key={index}
+              className="flex flex-col justify-center gap-3 w-[90%] mx-auto "
+            >
+              {items.category && (
+                <h1 className="text-lg font-bold p-2 ">{items.category}</h1>
+              )}
+              {items.links.map(({ Icon, href, text }, index) => (
+                // <div></div>
+                <NavLink
+                  to={href}
+                  key={index}
+                  onClick={() => setSelectedTab(href)}
+                  className={buttonVariants({
+                    variant: selectedTab === href ? "secondary" : "ghost",
+                    className: `flex gap-3 w-full  ${
+                      selectedTab === href && "font-extrabold text-lg"
+                    }`,
+                  })}
+                >
+                  <Icon />
+                  <div className="w-[70%]">{text}</div>
+                </NavLink>
+              ))}
+              <hr className="border-b" />
+            </div>
+          ))}
+        </ScrollArea>
+      </div>
+    </>
   );
 };
 
 export default Sidebar;
 
-interface Links {
+export interface Links {
   href: string;
   text: string;
   Icon: LucideIcon;
